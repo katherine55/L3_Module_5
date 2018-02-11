@@ -27,6 +27,11 @@ public class RemovingStuffFromArrayLists {
 
 		System.out.println(stuffIFoundInTheYard.size());
 
+		for (int i = 0; i < stuffIFoundInTheYard.size(); i++) {
+			if (stuffIFoundInTheYard.get(i).equals(new Dirt())) {
+				stuffIFoundInTheYard.remove(i);
+			}
+		} // need to print out arraylist and keep worms delete dirt
 		/* TODO 1: Clean out the dirt but keep the delicious worms. */
 
 		System.out.println(stuffIFoundInTheYard.size()); // should be 2
