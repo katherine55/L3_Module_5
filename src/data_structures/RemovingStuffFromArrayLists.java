@@ -11,6 +11,8 @@ public class RemovingStuffFromArrayLists {
 
 	public static void main(String[] args) {
 
+		String ts = "";
+		
 		class Stuff {
 		}
 		class Worm extends Stuff {
@@ -27,11 +29,11 @@ public class RemovingStuffFromArrayLists {
 
 		System.out.println(stuffIFoundInTheYard.size());
 
-		for (int i = 0; i < stuffIFoundInTheYard.size(); i++) {
-			if (stuffIFoundInTheYard.get(i).equals(new Dirt())) {
+		for (int i = stuffIFoundInTheYard.size() - 1; i > -1; i--) {
+			if (stuffIFoundInTheYard.get(i) instanceof Dirt) {
 				stuffIFoundInTheYard.remove(i);
 			}
-		} // need to print out arraylist and keep worms delete dirt
+		}
 		/* TODO 1: Clean out the dirt but keep the delicious worms. */
 
 		System.out.println(stuffIFoundInTheYard.size()); // should be 2
@@ -62,6 +64,15 @@ public class RemovingStuffFromArrayLists {
 		truth.add('u');
 		truth.add('t');
 
+		for (int i = truth.size() - 1; i > -1; i--) {
+			if (truth.get(i).toString().contentEquals("#")) {
+				truth.remove(i);
+			}
+		}
+		for (int i = 0; i < truth.size(); i++) {
+			ts += truth.get(i);
+		}
+		System.out.println(ts);
 		/* TODO 2: Remove the hash symbols and print out the truth. */
 
 	}
