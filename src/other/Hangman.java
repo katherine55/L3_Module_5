@@ -10,64 +10,71 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Hangman implements KeyListener {
-	
+
 	JFrame myFrame;
 	JPanel myPanel;
 	JLabel myLabel;
 	Stack<String> puzzles = new Stack<String>();
-	
-public static void main(String[] args) {
-Hangman jerry = new Hangman();
-jerry.createUI();
-jerry.addPuzzles();
-}
+	String labeltext = "";
+	String newtext = "";
+	String answer = "";
 
-void createUI() {	
-	myFrame = new JFrame("Hangman");
-	myPanel = new JPanel();
-	myLabel = new JLabel();
-	myLabel.setFont(new Font("Serif", Font.PLAIN, 50));
-	myPanel.add(myLabel);
-	myFrame.add(myPanel);
-	myFrame.setVisible(true);
-	
-	myFrame.addKeyListener(this);
-	
+	public static void main(String[] args) {
+		Hangman jerry = new Hangman();
+		jerry.createUI();
+		jerry.addPuzzles();
 	}
 
-void addPuzzles() {
-	puzzles.add("sheep");
-	puzzles.add("electric");
-	puzzles.add("dream");
-	puzzles.add("androids");
-	
-	
-	
-}
+	void createUI() {
+		myFrame = new JFrame("Hangman");
+		myPanel = new JPanel();
+		myLabel = new JLabel();
+		myLabel.setFont(new Font("Serif", Font.PLAIN, 50));
+		myPanel.add(myLabel);
+		myFrame.add(myPanel);
+		myFrame.setVisible(true);
 
-@Override
-public void keyTyped(KeyEvent e) {
-	
-}
+		myFrame.addKeyListener(this);
+
+	}
+
+	void addPuzzles() {
+		puzzles.add("sheep");
+		puzzles.add("electric");
+		puzzles.add("dream");
+		puzzles.add("androids");
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
 
 @Override
 public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()== KeyEvent.VK_ENTER) {
-			String labeltext = "";
+			labeltext = "";
 		int length = puzzles.lastElement().length();
-		String answer = puzzles.pop();
+		answer = puzzles.pop();
 		for(int i = 0; i < length; i++) {
 			labeltext += "_ ";
 		}
 		myLabel.setText(labeltext);
 	}
+		for(int i = 0; i < answer.length(); i++) {
+			if(answer.charAt(i) == e.getKeyChar()) {
+				newtext+=e.getKeyChar()+ " ";
+			}
+			else {newtext+="_ ";}
+			myLabel.setText(newtext);
+		}
+		
 }
 
-@Override
-public void keyReleased(KeyEvent e) {
-	
-}
+	@Override
+	public void keyReleased(KeyEvent e) {
 
-
+	}
 
 }
