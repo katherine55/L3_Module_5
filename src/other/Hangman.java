@@ -1,13 +1,17 @@
 package other;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+
 
 public class Hangman implements KeyListener {
 
@@ -18,6 +22,8 @@ public class Hangman implements KeyListener {
 	String labeltext = "";
 	String newtext = "";
 	String answer = "";
+	JLabel lives = new JLabel();
+	int counter = 9;
 
 	public static void main(String[] args) {
 		Hangman jerry = new Hangman();
@@ -30,7 +36,9 @@ public class Hangman implements KeyListener {
 		myPanel = new JPanel();
 		myLabel = new JLabel();
 		myLabel.setFont(new Font("Serif", Font.PLAIN, 50));
+		lives.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3));
 		myPanel.add(myLabel);
+		myPanel.add(lives);
 		myFrame.add(myPanel);
 		myFrame.setVisible(true);
 
@@ -51,26 +59,31 @@ public class Hangman implements KeyListener {
 
 	}
 
-@Override
-public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()== KeyEvent.VK_ENTER) {
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			labeltext = "";
-		int length = puzzles.lastElement().length();
-		answer = puzzles.pop();
-		for(int i = 0; i < length; i++) {
-			labeltext += "_ ";
-		}
-		myLabel.setText(labeltext);
-	}
-		for(int i = 0; i < answer.length(); i++) {
-			if(answer.charAt(i) == e.getKeyChar()) {
-				newtext+=e.getKeyChar()+ " ";
+			lives.setText(""+counter);
+			int length = puzzles.lastElement().length();
+			answer = puzzles.pop();
+			for (int i = 0; i < length; i++) {
+				labeltext += "-";
 			}
-			else {newtext+="_ ";}
-			myLabel.setText(newtext);
+			myLabel.setText(labeltext);
 		}
-		
-}
+
+		for (int i = 0; i < answer.length(); i++) {
+			if (answer.charAt(i) == e.getKeyChar()) {
+			labeltext = labeltext.substring(0, i) + e.getKeyChar() + labeltext.substring(i+1, answer.length());
+			System.out.println("Yay!");
+			} else {
+				counter--;
+				lives.setText(""+counter);
+				myLabel.setText(labeltext);
+			}
+		}
+
+	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
