@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
 public class Hangman implements KeyListener {
 
 	JFrame myFrame;
@@ -54,6 +52,17 @@ public class Hangman implements KeyListener {
 
 	}
 
+	void loadNextPuzzle() {
+		labeltext = "";
+		lives.setText("" + counter);
+		int length = puzzles.lastElement().length();
+		answer = puzzles.pop();
+		for (int i = 0; i < length; i++) {
+			labeltext += "-";
+		}
+		myLabel.setText(labeltext);
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 
@@ -63,7 +72,7 @@ public class Hangman implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			labeltext = "";
-			lives.setText(""+counter);
+			lives.setText("" + counter);
 			int length = puzzles.lastElement().length();
 			answer = puzzles.pop();
 			for (int i = 0; i < length; i++) {
@@ -74,13 +83,27 @@ public class Hangman implements KeyListener {
 
 		for (int i = 0; i < answer.length(); i++) {
 			if (answer.charAt(i) == e.getKeyChar()) {
-			labeltext = labeltext.substring(0, i) + e.getKeyChar() + labeltext.substring(i+1, answer.length());
-			System.out.println("Yay!");
+				labeltext = labeltext.substring(0, i) + e.getKeyChar() + labeltext.substring(i + 1, answer.length());
+				System.out.println("Yay!");
 			} else {
-				counter--;
-				lives.setText(""+counter);
+				// counter--;
+				// lives.setText(""+counter);
 				myLabel.setText(labeltext);
 			}
+		}
+
+		if (answer.contains(e.getKeyChar() + "") == false) {
+			counter--;
+			lives.setText("" + counter);
+
+			if (counter == 0) {
+				System.out.println("Sorry, move on to next puzzle -->");
+				
+				loadNextPuzzle();
+				counter = 9;
+
+			}
+
 		}
 
 	}
